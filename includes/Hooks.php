@@ -7,6 +7,7 @@ use MediaWiki\MediaWikiServices;
 use OutputPage;
 use Skin;
 use User;
+use BetaFeatures;
 
 class Hooks {
 	/**
@@ -18,6 +19,10 @@ class Hooks {
 	 * @param array &$footerlinks Array of URLs to add to.
 	 */
 	public static function onSkinAddFooterLinks( Skin $skin, string $key, array &$footerlinks ) {
+		if ( !Self::betaFeatureEnabled( $skin->getUser() ) ) {
+			return;
+		}
+
 		if ( $key === 'places' ) {
 			$footerlinks['darkmode-link'] = Html::element( 'a', [ 'href' => '#', 'class' => 'darkmode-link' ], $skin->msg( 'darkmode-link' )->text() );
 		}
@@ -30,6 +35,10 @@ class Hooks {
  	 * @param array $bar
  	 */
 	public static function onSkinBuildSidebar( Skin $skin, array &$bar ) {
+		if ( !Self::betaFeatureEnabled( $skin->getUser() ) ) {
+			return;
+		}
+
 		$bar['Theme'] = Html::element( 'a', [ 'href' => '#', 'class' => 'darkmode-link' ], $skin->msg( 'darkmode-link' )->text() );;
 	}
 
@@ -40,6 +49,10 @@ class Hooks {
 	 * @param Skin $skin Skin being used.
 	 */
 	public static function onBeforePageDisplay( OutputPage $output, Skin $skin ) {
+		if ( !Self::betaFeatureEnabled( $skin->getUser() ) ) {
+			return;
+		}
+
 		$output->addModules( 'ext.DarkMode' );
 		$output->addModuleStyles( 'ext.DarkMode.styles' );
 
@@ -72,5 +85,29 @@ class Hooks {
 			'type' => 'api',
 			'default' => 0,
 		];
+	}
+
+	public static function onGetBetaFeaturePreferences( User $user, array &$betaPrefs ) {
+        $betaPrefs['darkmode-feature'] = [
+            // The first two are message keys
+            'label-message' => 'darkmode-label-msg',
+            'desc-message' => 'darkmode-description-msg',
+            // Paths to images that represents the feature.
+            // The image is usually different for ltr and rtl languages.
+            // Images for specific languages can also specified using the language code.
+            'screenshot' => array(
+                // 'ru' => "$extensionAssetsPath/MyExtension/images/screenshot-ru.png",
+                // 'ltr' => "$extensionAssetsPath/MyExtension/images/screenshot-ltr.png",
+                // 'rtl' => "$extensionAssetsPath/MyExtension/images/screenshot-rtl.png",
+            ),
+            // Link to information on the feature - use subpages on mw.org, maybe?
+            'info-link' => 'https://www.mediawiki.org/wiki/Special:MyLanguage/Extension:MyExtension/DarkMode',
+            // Link to discussion about the feature - talk pages might work
+            'discussion-link' => 'https://www.mediawiki.org/wiki/Special:MyLanguage/Help_talk:Extension:MyExtension/DarkMode',
+        ];
+    }
+
+	public static function betaFeatureEnabled( User $user ) {
+		return BetaFeatures::isFeatureEnabled( $user, 'darkmode-feature' ) ;
 	}
 }

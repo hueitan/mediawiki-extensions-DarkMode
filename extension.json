@@ -19,7 +19,8 @@
 		"SkinAddFooterLinks": "MediaWiki\\Extension\\DarkMode\\Hooks::onSkinAddFooterLinks",
 		"BeforePageDisplay": "MediaWiki\\Extension\\DarkMode\\Hooks::onBeforePageDisplay",
 		"GetPreferences": "MediaWiki\\Extension\\DarkMode\\Hooks::onGetPreferences",
-		"SkinBuildSidebar": "MediaWiki\\Extension\\DarkMode\\Hooks::onSkinBuildSidebar"
+		"SkinBuildSidebar": "MediaWiki\\Extension\\DarkMode\\Hooks::onSkinBuildSidebar",
+		"GetBetaFeaturePreferences": "MediaWiki\\Extension\\DarkMode\\Hooks::onGetBetaFeaturePreferences"
 	},
 	"MessagesDirs": {
 		"DarkMode": [
