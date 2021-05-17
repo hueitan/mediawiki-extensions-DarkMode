@@ -18,10 +18,6 @@ class Hooks {
 	 * @param array &$footerlinks Array of URLs to add to.
 	 */
 	public static function onSkinAddFooterLinks( Skin $skin, string $key, array &$footerlinks ) {
-		if ( !self::shouldHaveDarkMode( $skin ) ) {
-			return;
-		}
-
 		if ( $key === 'places' ) {
 			$footerlinks['darkmode-link'] = Html::element( 'a', [ 'href' => '#' ], $skin->msg( 'darkmode-link' )->text() );
 		}
@@ -34,10 +30,6 @@ class Hooks {
 	 * @param Skin $skin Skin being used.
 	 */
 	public static function onBeforePageDisplay( OutputPage $output, Skin $skin ) {
-		if ( !self::shouldHaveDarkMode( $skin ) ) {
-			return;
-		}
-
 		$output->addModules( 'ext.DarkMode' );
 		$output->addModuleStyles( 'ext.DarkMode.styles' );
 
@@ -48,15 +40,6 @@ class Hooks {
 		} elseif ( MediaWikiServices::getInstance()->getUserOptionsLookup()->getBoolOption( $user, 'darkmode' ) ) {
 			self::toggleDarkMode( $output );
 		}
-	}
-
-	/**
-	 * Conditions for when Dark Mode should be available.
-	 * @param Skin $skin
-	 * @return bool
-	 */
-	private static function shouldHaveDarkMode( Skin $skin ) {
-		return $skin->getSkinName() !== 'minerva';
 	}
 
 	/**
