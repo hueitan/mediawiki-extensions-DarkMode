@@ -18,7 +18,8 @@
 	"Hooks": {
 		"SkinAddFooterLinks": "MediaWiki\\Extension\\DarkMode\\Hooks::onSkinAddFooterLinks",
 		"BeforePageDisplay": "MediaWiki\\Extension\\DarkMode\\Hooks::onBeforePageDisplay",
-		"GetPreferences": "MediaWiki\\Extension\\DarkMode\\Hooks::onGetPreferences"
+		"GetPreferences": "MediaWiki\\Extension\\DarkMode\\Hooks::onGetPreferences",
+		"SkinBuildSidebar": "MediaWiki\\Extension\\DarkMode\\Hooks::onSkinBuildSidebar"
 	},
 	"MessagesDirs": {
 		"DarkMode": [

@@ -19,8 +19,18 @@ class Hooks {
 	 */
 	public static function onSkinAddFooterLinks( Skin $skin, string $key, array &$footerlinks ) {
 		if ( $key === 'places' ) {
-			$footerlinks['darkmode-link'] = Html::element( 'a', [ 'href' => '#' ], $skin->msg( 'darkmode-link' )->text() );
+			$footerlinks['darkmode-link'] = Html::element( 'a', [ 'href' => '#', 'class' => 'darkmode-link' ], $skin->msg( 'darkmode-link' )->text() );
 		}
+	}
+
+	/** 
+	 * This will create a new sidebar item.
+	 * This is usually the topmost section near the logo and is untitled.
+ 	 * @param Skin $skin
+ 	 * @param array $bar
+ 	 */
+	public static function onSkinBuildSidebar( Skin $skin, array &$bar ) {
+		$bar['Theme'] = Html::element( 'a', [ 'href' => '#', 'class' => 'darkmode-link' ], $skin->msg( 'darkmode-link' )->text() );;
 	}
 
 	/**
