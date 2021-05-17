@@ -20,7 +20,8 @@
 		"BeforePageDisplay": "MediaWiki\\Extension\\DarkMode\\Hooks::onBeforePageDisplay",
 		"GetPreferences": "MediaWiki\\Extension\\DarkMode\\Hooks::onGetPreferences",
 		"SkinBuildSidebar": "MediaWiki\\Extension\\DarkMode\\Hooks::onSkinBuildSidebar",
-		"GetBetaFeaturePreferences": "MediaWiki\\Extension\\DarkMode\\Hooks::onGetBetaFeaturePreferences"
+		"GetBetaFeaturePreferences": "MediaWiki\\Extension\\DarkMode\\Hooks::onGetBetaFeaturePreferences",
+		"MobileMenu": "MediaWiki\\Extension\\DarkMode\\Hooks::onMobileMenu"
 	},
 	"MessagesDirs": {
 		"DarkMode": [

@@ -5,7 +5,7 @@ $( function () {
 		$( '.darkmode-link' ).text( mw.msg( darkMode ? 'darkmode-default-link' : 'darkmode-link' ) );
 	}
 	$( updatetext() );
-	$( '.darkmode-link' ).on( 'click', function ( e ) {
+	$( '.darkmode-link, .darkmode-link-mobilemenu' ).on( 'click', function ( e ) {
 		e.preventDefault();
 		darkMode = !darkMode;
 

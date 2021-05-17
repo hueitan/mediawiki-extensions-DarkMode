@@ -4,6 +4,8 @@ namespace MediaWiki\Extension\DarkMode;
 
 use Html;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Minerva\Menu\Group;
+use MinervaUI;
 use OutputPage;
 use Skin;
 use User;
@@ -25,6 +27,20 @@ class Hooks {
 
 		if ( $key === 'places' ) {
 			$footerlinks['darkmode-link'] = Html::element( 'a', [ 'href' => '#', 'class' => 'darkmode-link' ], $skin->msg( 'darkmode-link' )->text() );
+		}
+	}
+
+	public static function onMobileMenu( string $name, Group $group ) {
+		if ( in_array( $name, [ 'sitetools', 'user' ] ) ) {
+			$group->insert( 'darkmode-link' )
+				->addComponent(
+						wfMessage( 'darkmode-label-msg' ), // @todo complete with "darkmode" text
+						'?usedarkmode=1', // @todo hide the menu bar
+						MinervaUI::iconClass( 'moon', 'before', 'darkmode-link-mobilemenu' ) , // @todo complete with 'icon'
+						[
+							'data-event-name' => 'darkmode',
+						]
+				);
 		}
 	}
 
