@@ -34,9 +34,9 @@ class Hooks {
 		if ( in_array( $name, [ 'sitetools', 'user' ] ) ) {
 			$group->insert( 'darkmode-link' )
 				->addComponent(
-						wfMessage( 'darkmode-label-msg' ), // @todo complete with "darkmode" text
-						'?usedarkmode=1', // @todo hide the menu bar
-						MinervaUI::iconClass( 'moon', 'before', 'darkmode-link-mobilemenu' ) , // @todo complete with 'icon'
+						wfMessage( 'darkmode-label-msg' ) . ' always',
+						'?setdarkmode=1', // @todo hide the menu bar
+						MinervaUI::iconClass( 'moon', 'before' ) , // @todo complete with 'icon'
 						[
 							'data-event-name' => 'darkmode',
 						]
@@ -74,9 +74,13 @@ class Hooks {
 
 		$req = $output->getRequest();
 		$user = $skin->getUser();
-		if ( $req->getVal( 'usedarkmode' ) ) {
+
+		if ( $req->getVal( 'setdarkmode' ) ) {
+			MediaWikiServices::getInstance()->getUserOptionsManager()->setOption( $user, 'darkmode', 1 );
 			self::toggleDarkMode( $output );
-		} elseif ( MediaWikiServices::getInstance()->getUserOptionsLookup()->getBoolOption( $user, 'darkmode' ) ) {
+		} else if ( $req->getVal( 'usedarkmode' ) ) {
+			self::toggleDarkMode( $output );
+		} elseif ( MediaWikiServices::getInstance()->getUserOptionsManager()->getOption( $user, 'darkmode' ) ) {
 			self::toggleDarkMode( $output );
 		}
 	}
